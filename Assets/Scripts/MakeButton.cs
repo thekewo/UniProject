@@ -11,6 +11,7 @@ public class MakeButton : MonoBehaviour
     private bool physical;
 
     private GameObject hero;
+    private GameObject button;
     void Start()
     {
         string temp = gameObject.name;
@@ -22,13 +23,19 @@ public class MakeButton : MonoBehaviour
     {
         if (btn.CompareTo("MeleeButton") == 0)
         {
+            button = GameObject.FindGameObjectWithTag("MeleeBtn");
+            button.GetComponent<AudioSource>().Play();
             hero.GetComponent<FighterAction>().SelectAttack("melee");
         } else if (btn.CompareTo("RangedButton") == 0)
         {
+            button = GameObject.FindGameObjectWithTag("RangedBtn");
+            button.GetComponent<AudioSource>().Play();
             hero.GetComponent<FighterAction>().SelectAttack("ranged");
         } else
         {
-            hero.GetComponent<FighterAction>().SelectAttack("run");
+            button = GameObject.FindGameObjectWithTag("BlockBtn");
+            button.GetComponent<AudioSource>().Play();
+            hero.GetComponent<FighterAction>().SelectAttack("block");
         }
     }
 }
