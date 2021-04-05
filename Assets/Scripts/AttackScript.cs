@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AttackScript : MonoBehaviour
 {
@@ -43,11 +45,12 @@ public class AttackScript : MonoBehaviour
             damage = multiplier * attackerStats.attack;
             if(magicAttack)
             {
-                damage = multiplier * attackerStats.range;
+                damage = multiplier * attackerStats.intelligence;
             }
 
             float defenseMultiplier = Random.Range(minDefenseMultiplier, maxDefenseMultiplier);
-            damage = Mathf.Max(0, damage - (defenseMultiplier * targetStats.defense));
+            damage = targetStats.block - Mathf.Max(0, damage - (defenseMultiplier * targetStats.defense));
+            if (damage < 0) damage = 0;
             owner.GetComponent<Animator>().Play(animationName);
             targetStats.ReceiveDamage(Mathf.CeilToInt(damage));
             attackerStats.UpdateMagicFill(magicCost);
@@ -55,6 +58,13 @@ public class AttackScript : MonoBehaviour
         {
             Invoke("SkipTurnContinueGame", 2);
         }
+    }
+
+    public void Block()
+    {
+        targetStats = owner.GetComponent<FighterStats>();
+        targetStats.block = Convert.ToSingle(targetStats.health * 0.25);
+        Invoke("SkipTurnContinueGame", 2);
     }
 
     void SkipTurnContinueGame()
