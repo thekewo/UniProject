@@ -7,6 +7,9 @@ TagManager:
   - Hero
   - Enemy
   - Dead
+  - MeleeBtn
+  - RangedBtn
+  - BlockBtn
   layers:
   - Default
   - TransparentFX
