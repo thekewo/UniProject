@@ -20,9 +20,9 @@ public class FighterStats : MonoBehaviour, IComparable
     public float magic;
     public float attack;
     public float defense;
-    public float range;
+    public float intelligence;
     public float speed;
-    public float experience;
+    public float block;
 
     private float startHealth;
     private float startMagic;
@@ -74,8 +74,6 @@ public class FighterStats : MonoBehaviour, IComparable
         {
             dead = true;
             gameObject.tag = "Dead";
-            Destroy(healthFill);
-            Destroy(gameObject);
         } else if (damage > 0)
         {
             xNewHealthScale = healthScale.x * (health / startHealth);
@@ -84,6 +82,7 @@ public class FighterStats : MonoBehaviour, IComparable
 
         gameControllerObj.GetComponent<GameController>().battleText.gameObject.SetActive(true);
         gameControllerObj.GetComponent<GameController>().battleText.text = damage.ToString();
+        gameControllerObj.GetComponent<GameController>().battleMenu.SetActive(false);
 
         Invoke("ContinueGame", 2);
     }
@@ -100,7 +99,8 @@ public class FighterStats : MonoBehaviour, IComparable
 
     public int CompareTo(object otherStats)
     {
-        int next = nextActTurn.CompareTo(((FighterStats)otherStats).nextActTurn);
+        int next = nextActTurn.CompareTo(
+            ((FighterStats)otherStats).nextActTurn);
         return next;
     }
 
