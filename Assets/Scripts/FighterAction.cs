@@ -17,8 +17,6 @@ public class FighterAction : MonoBehaviour
     [SerializeField]
     private Sprite faceIcon;
 
-    private GameObject currentAttack;
-
     void Awake()
     {
         hero = GameObject.FindGameObjectWithTag("Hero");
@@ -40,6 +38,9 @@ public class FighterAction : MonoBehaviour
         {
             rangePrefab.GetComponent<AttackScript>().Attack(victim);
             Debug.Log($"Ranged Attack to {victim}");
+        }else
+        {
+            meleePrefab.GetComponent<AttackScript>().Block();
         }
     }
 }
